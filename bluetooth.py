@@ -8,20 +8,24 @@ import time
 
 def scan(scan_timeout=20):
     """ scan
-        Scan for devices 
+        Scan for devices
 
         Parameters
         ----------
         scan_timeout : int
             Timeout to run the scan
+        Returns
+        ----------
+        devices : dict
+            set of discovered devices as MAC:Name pairs
     """
     p = subprocess.Popen(["bluetoothctl", "scan", "on"])
     time.sleep(scan_timeout)
     p.terminate()
-    return True
+    return __devices()
 
 
-def devices():
+def __devices():
     """ devices
         List discovered devices
 
@@ -74,7 +78,7 @@ def remove(mac_address):
 
 def connect(mac_address):
     """ connect
-        Connect to a device 
+        Connect to a device
 
         Parameters
         ----------
@@ -94,7 +98,8 @@ def disconnect():
 
 def paired_devices():
     """ paired_devices
-            Return a list of paired devices 
+            Return a list of paired devices
 
     """
     return subprocess.check_output("bluetoothctl paired-devices", shell=True).decode()
+
